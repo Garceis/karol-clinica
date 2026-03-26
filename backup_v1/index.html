@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dra. Karol Silva | Neuropsicologia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="assets/logo.png" alt="Logo Dra. Karol Silva" style="height: 50px; width: auto;">
+                <h1>Dra. Karol Silva</h1>
+            </div>            <nav>
+                <ul class="nav-links">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li class="dropdown">
+                        <a href="#servicos" class="dropbtn">Serviços <span class="arrow">▼</span></a>
+                        <ul class="dropdown-content">
+                            <li><a href="#servicos">Avaliação Neuropsicológica</a></li>
+                            <li><a href="#servicos">Reabilitação Cognitiva</a></li>
+                            <li><a href="#servicos">Acompanhamento Escolar</a></li>
+                            <li><a href="#servicos">Orientação Familiar</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#depoimentos">Depoimentos</a></li>
+                    <li><a href="#contato" class="btn-contato">Fale Conosco</a></li>
+                    <li><a href="dashboard.html" class="btn-contato" style="background-color: var(--text-dark); margin-left: 10px;">🔒 Área Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container">
+                <div class="hero-text">
+                    <h2>Bem-vinda ao seu espaço de cuidado e desenvolvimento</h2>
+                    <p>Atendimento especializado em neuropsicologia para todas as idades, com foco em evidência científica e acolhimento.</p>
+                    <a href="#contato" class="cta-button">Agendar Consulta</a>
+                </div>
+                <div class="hero-image-container">
+                    <img src="assets/hero-neuro.jpg" alt="Dra. Karol Silva - Neuropsicóloga" class="hero-img">
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="section-gray">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Sobre Mim</h2>
+                    <div class="underline"></div>
+                </div>
+                <div class="about-content">
+                    <p>Sou a Dra. Karol Silva, neuropsicóloga com mais de 10 anos de experiência em avaliação, diagnóstico e intervenção em questões cognitivas, emocionais e comportamentais. Meu compromisso é promover saúde mental e qualidade de vida para meus pacientes, utilizando abordagens baseadas em evidências científicas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="servicos">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nossos Serviços</h2>
+                    <div class="underline"></div>
+                </div>
+                <div class="servicos-grid">
+                    <div class="servico-card">
+                        <div class="icon">🧠</div>
+                        <h3>Avaliação Neuropsicológica</h3>
+                        <p>Investigação detalhada das funções cognitivas para diagnóstico preciso.</p>
+                    </div>
+                    <div class="servico-card">
+                        <div class="icon">🔄</div>
+                        <h3>Reabilitação Cognitiva</h3>
+                        <p>Treinamento para melhorar ou compensar funções cognitivas prejudicadas.</p>
+                    </div>
+                    <div class="servico-card">
+                        <div class="icon">🏫</div>
+                        <h3>Acompanhamento Escolar</h3>
+                        <p>Suporte especializado para dificuldades de aprendizagem e inclusão.</p>
+                    </div>
+                    <div class="servico-card">
+                        <div class="icon">👨‍👩‍👧‍👦</div>
+                        <h3>Orientação Familiar</h3>
+                        <p>Apoio e estratégias para famílias lidarem com diagnósticos e comportamentos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="depoimentos" class="section-gray">
+            <div class="container">
+                <div class="section-header">
+                    <h2>O que dizem os pacientes</h2>
+                    <div class="underline"></div>
+                </div>
+                <div class="testimonials-container">
+                    <blockquote class="testimonial">
+                        <p>"Profissional dedicada, atenciosa e extremamente competente. Recomendo!"</p>
+                        <footer>- Maria S.</footer>
+                    </blockquote>
+                    <blockquote class="testimonial">
+                        <p>"O acompanhamento neuropsicológico fez toda diferença na vida do meu filho."</p>
+                        <footer>- João P.</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Contato</h2>
+                    <div class="underline"></div>
+                </div>
+                <div class="contact-wrapper">
+                    <form id="form-contato" class="contact-form">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" id="nome" name="nome" placeholder="Seu nome aqui" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" name="mensagem" placeholder="Como posso ajudar?" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Enviar Mensagem</button>
+                    </form>
+                    <div id="mensagem-sucesso" class="success-alert">Mensagem enviada com sucesso!</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/logo.png" alt="Logo" style="height: 60px; width: auto; margin-bottom: 15px; filter: brightness(0) invert(1);">
+                    <br>
+                    <span>Dra. Karol Silva</span>
+                </div>
+                <p>&copy; 2026 Dra. Karol Silva | Neuropsicologia | <a href="pacientes.html" style="color: inherit; text-decoration: none; opacity: 0.5;">Painel</a></p>
+                <div class="social-links">
+                    <!-- Ícones fictícios -->
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação Clínica | Dra. Karol Silva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00A3AD;
+            --secondary-color: #71C5E8;
+            --bg-light: #f0f4f8;
+            --white: #ffffff;
+        }
+        body { font-family: 'Open Sans', sans-serif; background: var(--bg-light); margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--bg-light); padding-bottom: 20px; }
+        .logo { width: 150px; margin-bottom: 15px; }
+        h1 { font-family: 'Montserrat', sans-serif; color: var(--primary-color); margin: 0; font-size: 1.5rem; }
+        .instrucoes { background: #e3f2fd; padding: 20px; border-radius: 8px; margin-bottom: 30px; font-size: 0.95rem; line-height: 1.6; }
+        .pergunta-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .pergunta-text { flex: 1; font-size: 0.95rem; }
+        .opcoes { display: flex; gap: 15px; }
+        .opcao { text-align: center; cursor: pointer; }
+        .opcao input { cursor: pointer; }
+        .btn-submit { width: 100%; padding: 15px; background: var(--primary-color); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 30px; transition: 0.3s; }
+        .btn-submit:hover { background: var(--accent-color); transform: translateY(-2px); }
+        #sucesso { display: none; text-align: center; padding: 50px 0; }
+        .spinner { border: 4px solid rgba(0,0,0,0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: var(--primary-color); animation: spin 1s linear infinite; display: inline-block; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes modalIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    </style>
+</head>
+<body>
+    <!-- Modal de Instruções Iniciais -->
+    <div id="modal-instrucoes" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px;">
+        <div style="background: white; padding: 40px; border-radius: 15px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); animation: modalIn 0.4s ease-out;">
+            <div style="font-size: 50px; margin-bottom: 20px;">📋</div>
+            <h2 style="font-family: 'Montserrat', sans-serif; color: var(--primary-color); margin-bottom: 20px;">Bem-vindo(a)</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; color: #444; margin-bottom: 30px;">
+                <strong>INSTRUÇÕES:</strong><br>
+                Em cada questão, por favor preencha o círculo que melhor descreva o comportamento da criança nos <strong>"últimos 6 meses."</strong>
+            </p>
+            <button onclick="fecharInstrucoes()" style="width: 100%; padding: 15px; background: var(--primary-color); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s;">OK, ENTENDI</button>
+        </div>
+    </div>
+
+    <div class="container" id="app">
+        <div id="form-container">
+            <div class="header">
+                <img src="assets/logo.png" alt="Logo" class="logo">
+                <h1>Avaliação SRS-2: Escala de Responsividade Social</h1>
+                <p id="info-paciente" style="font-weight: bold; margin-top: 10px; color: #666;"></p>
+            </div>
+
+            <div class="instrucoes">
+                <strong>INSTRUÇÕES:</strong> Em cada questão, por favor preencha o círculo que melhor descreva o comportamento da criança nos <strong>"últimos 6 meses."</strong><br>
+                <div style="display: flex; justify-content: space-between; margin-top: 15px; font-weight: bold; color: var(--primary-color);">
+                    <span>1: Não é verdade</span>
+                    <span>2: Algumas vezes verdade</span>
+                    <span>3: Muitas vezes verdade</span>
+                    <span>4: Quase sempre verdade</span>
+                </div>
+            </div>
+
+            <form id="form-avaliacao">
+                <div class="form-grid" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-size: 0.85rem; font-weight: bold;">Seu Nome Completo (Respondente)</label>
+                        <input type="text" name="respondente_nome" required placeholder="Digite seu nome..." style="padding: 10px; border-radius: 5px; border: 1px solid #ddd; width: 100%; box-sizing: border-box;">
+                    </div>
+                </div>
+                <div id="lista-perguntas"></div>
+                <button type="submit" class="btn-submit">Enviar Avaliação Concluída</button>
+            </form>
+        </div>
+
+        <div id="sucesso">
+            <div style="font-size: 60px; color: var(--primary-color);">✓</div>
+            <h2>Muito obrigado!</h2>
+            <p>As informações foram enviadas com sucesso para a Dra. Karol Silva.</p>
+            <p style="color: #888;">Você já pode fechar esta aba.</p>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        let pacienteId = null;
+
+        function fecharInstrucoes() {
+            document.getElementById('modal-instrucoes').style.display = 'none';
+        }
+
+        async function validar() {
+            if (!token) {
+                document.body.innerHTML = '<div style="text-align:center; padding:50px;"><h2>Link inválido.</h2><p>Por favor, solicite um novo link ao profissional.</p></div>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/testes/validar/${token}`);
+                const data = await res.json();
+                if (data.success) {
+                    pacienteId = data.link.paciente_id;
+                    document.getElementById('info-paciente').innerText = `Paciente: ${data.link.paciente_nome}`;
+                    montarPerguntas();
+                } else {
+                    document.body.innerHTML = `<div style="text-align:center; padding:50px;"><h2>${data.message}</h2></div>`;
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function montarPerguntas() {
+            const perguntas = [
+                "1. Parece muito mais inquieta em situações sociais do que quando está sozinha.",
+                "2. As expressões em seu rosto não combinam com o que está dizendo.",
+                "3. Parece confiante (ou segura) quando está interagindo com outras pessoas.",
+                "4. Quando há sobrecarga de estímulos, apresenta padrões rígidos ou inflexíveis de comportamento.",
+                "5. Não percebe quando os outros estão tentando tirar vantagem dela.",
+                "6. Prefere estar sozinha do que com os outros.",
+                "7. Demonstra perceber o que os outros estão pensando ou sentindo.",
+                "8. Se comporta de maneira estranha ou bizarra.",
+                "9. Fica próxima a adultos, parece ser muito dependente deles.",
+                "10. Leva as coisas muito 'ao pé da letra' e não compreende o real significado.",
+                "11. É autoconfiante.",
+                "12. É capaz de comunicar seus sentimentos para as outras pessoas.",
+                "13. É estranha na 'tomada de vez' das interações (reciprocidade).",
+                "14. Não tem boa coordenação.",
+                "15. É capaz de entender o tom de voz e as expressões faciais.",
+                "16. Evita o contato visual ou tem contato visual diferente.",
+                "17. Reconhece quando algo é injusto.",
+                "18. Tem dificuldade em fazer amigos, mesmo tentando dar o melhor de si.",
+                "19. Fica frustrada quando não consegue expressar suas ideias.",
+                "20. Mostra interesses sensoriais incomuns ou formas estranhas de brincar.",
+                "21. É capaz de imitar as ações de outras pessoas.",
+                "22. Brinca adequadamente com crianças da sua idade.",
+                "23. Não participa de atividades em grupo a menos que seja convidada.",
+                "24. Tem mais dificuldade do que outras crianças com mudanças na rotina.",
+                "25. Não parece se importar em estar fora de sintonia ou em um 'mundo' diferente.",
+                "26. Oferece conforto para os outros quando estão tristes.",
+                "27. Evita iniciar interações sociais com seus colegas ou adultos.",
+                "28. Pensa ou fala sobre a mesma coisa repetidamente."
+            ];
+
+            const container = document.getElementById('lista-perguntas');
+            perguntas.forEach((p, i) => {
+                container.innerHTML += `
+                    <div class="pergunta-item">
+                        <div class="pergunta-text">${p}</div>
+                        <div class="opcoes">
+                            ${[1,2,3,4].map(v => `
+                                <div class="opcao">
+                                    <input type="radio" name="q${i+1}" value="${v}" required><br>
+                                    <small>${v}</small>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById('form-avaliacao').onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const respostas = {};
+            formData.forEach((value, key) => respostas[key] = value);
+
+            try {
+                const res = await fetch('/api/testes/submeter', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        token: token,
+                        paciente_id: pacienteId,
+                        dados_json: respostas
+                    })
+                });
+
+                if (res.ok) {
+                    document.getElementById('form-container').style.display = 'none';
+                    document.getElementById('sucesso').style.display = 'block';
+                }
+            } catch (err) {
+                alert("Erro ao enviar. Tente novamente.");
+            }
+        };
+
+        validar();
+    </script>
+</body>
+</html>

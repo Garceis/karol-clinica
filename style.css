@@ -1,0 +1,23 @@
+/* Estilos base (Fontes já importadas no HTML) */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animações Flutuantes */
+.animate-bounce-slow {
+    animation: bounceSlow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes bounceSlow {
+    0%, 100% {
+        transform: translateY(-8%);
+    }
+    50% {
+        transform: translateY(0);
+    }
+}

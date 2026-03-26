@@ -1,0 +1,22 @@
+{
+  "name": "site-karol",
+  "version": "1.3.0",
+  "description": "Este é um site institucional fictício para apresentação de uma profissional da área de neuropsicologia. O site é responsivo, moderno e utiliza apenas HTML, CSS e JavaScript puro.",
+  "main": "script.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.8.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1"
+  }
+}

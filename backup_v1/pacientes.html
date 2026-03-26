@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Pacientes | Dra. Karol Silva</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #003DA5; /* Azul Original */
+            --secondary-color: #71C5E8; /* Azul Claro Original */
+            --accent-color: #00A3AD; /* Teal Original */
+            --text-dark: #1A1A1A;
+            --bg-light: #F8F9FA;
+            --white: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .admin-container {
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        /* Card do Formulário */
+        .paciente-form {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 50px;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        input, textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 61, 165, 0.2);
+        }
+
+        /* Tabela */
+        .table-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .paciente-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .paciente-table th {
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid #eee;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .paciente-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        .paciente-table tr:hover {
+            background-color: #fcfcfc;
+        }
+
+        /* Ações */
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-edit {
+            background-color: #e3f2fd;
+            color: var(--primary-color);
+        }
+
+        .btn-delete {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .btn-action:hover {
+            opacity: 0.7;
+        }
+
+        .psi-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+
+        .logo h1 {
+            color: var(--primary-color) !important;
+        }
+        /* Filtros e Busca */
+        .search-container {
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 20px;
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .search-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .search-container input, .search-container select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .search-container input:focus, .search-container select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="psi-symbol" style="color: var(--primary-color);">Ψ</span>
+                <h1 style="font-size: 1.4rem; font-family: 'Montserrat', sans-serif; margin: 0;">Painel de Controle</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" style="color: var(--text-dark); text-decoration: none; font-weight: 600;">Sair do Painel</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px;">
+            <h2 style="margin: 0;">Gestão de Pacientes</h2>
+            <span style="color: #666; font-size: 0.9rem;">Dra. Karol Silva | Neuropsicologia</span>
+        </div>
+        
+        <div class="paciente-form">
+            <h3><span class="psi-badge">Ψ</span>Dados do Paciente</h3>
+            <form id="form-paciente">
+                <input type="hidden" id="paciente-id">
+                <input type="hidden" id="paciente-status">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="paciente-nome">Nome Completo</label>
+                        <input type="text" id="paciente-nome" placeholder="Ex: Maria Oliveira" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paciente-cpf">CPF</label>
+                        <input type="text" id="paciente-cpf" placeholder="000.000.000-00">
+                    </div>
+                    <div class="form-group">
+                        <label for="paciente-mae">Nome da Mãe</label>
+                        <input type="text" id="paciente-mae" placeholder="Nome da mãe do paciente">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="paciente-idade">Idade</label>
+                        <input type="number" id="paciente-idade" placeholder="Ex: 25">
+                    </div>
+                    <div class="form-group">
+                        <label for="paciente-telefone">Telefone / WhatsApp</label>
+                        <input type="text" id="paciente-telefone" placeholder="(00) 00000-0000">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label for="paciente-obs">Histórico / Observações</label>
+                    <textarea id="paciente-obs" placeholder="Anote aqui detalhes importantes do acompanhamento..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Salvar Registro</button>
+            </form>
+        </div>
+
+        <div class="search-container">
+            <div class="search-group">
+                <label style="font-weight: 600; font-size: 0.9rem; color: #555;">Pesquisar Paciente</label>
+                <input type="text" id="busca-paciente" placeholder="Buscar por Nome, CPF ou Nome da Mãe...">
+            </div>
+            <div class="search-group">
+                <label style="font-weight: 600; font-size: 0.9rem; color: #555;">Filtrar Status</label>
+                <select id="filtro-status">
+                    <option value="todos">Todos Status</option>
+                    <option value="ativo" selected>Ativos</option>
+                    <option value="inativo">Inativos</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="paciente-table">
+                <thead>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Idade</th>
+                        <th>Contato</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-pacientes">
+                    <!-- Dinâmico -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="pacientes.js"></script>
+</body>
+</html>
