@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: karol-clinica
+    env: node
+    plan: free
+    buildCommand: npm install && cd admin-frontend && npm install && npm run build && cd ..
+    startCommand: node server.js
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NODE_VERSION
+        value: 18
